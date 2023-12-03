@@ -4,13 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { zodResolver } from "@hookform/resolvers";
+import { BotAvatar } from "@/components/bot-avatar";
+import { Empty } from "@/components/empty";
+import { Loader } from "@/components/loader";
+import { UserAvatar } from "@/components/user-avatar";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { MessageSquare } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { formSchema } from "./constants";
 
 const Conversation = () => {
+    const [messages, setMessages] = useState([]);
+    const router = useRouter();
     const form = useForm({
-        resolver: zodResolver,
+        resolver: zodResolver(formSchema),
         defaultValues: {
             prompt: "",
         },
@@ -19,7 +30,25 @@ const Conversation = () => {
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values) => {
-        console.log(values);
+        try {
+            const userMessage = {
+                role: "user",
+                content: values.prompt,
+            };
+
+            const newMessages = [...messages, userMessage];
+            const response = await axios.post("/api/conversation", {
+                messages: newMessages,
+            });
+
+            setMessages((current) => [...current, userMessage, response.data]);
+
+            form.reset();
+        } catch (error) {
+            console.log(error);
+        } finally {
+            router.refresh();
+        }
     };
 
     return (
@@ -61,7 +90,36 @@ const Conversation = () => {
                     </form>
                 </Form>
             </div>
-            <div className="space-y-4 mt-4 ">Messages content</div>
+            <div className="space-y-4 mt-4 px-4 lg:px-8 ">
+                {isLoading && (
+                    <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+                        <Loader />
+                    </div>
+                )}
+                {messages.length === 0 && !isLoading && (
+                    <Empty label="No conversation started." />
+                )}
+                <div className="flex flex-col-reverse gap-y-4">
+                    {messages.map((message) => (
+                        <div
+                            key={message.content}
+                            className={cn(
+                                "p-8 w-full flex items-start gap-x-8 rounded-lg",
+                                message.role === "user"
+                                    ? "bg-white border border-black/10"
+                                    : "bg-muted"
+                            )}
+                        >
+                            {message.role === "user" ? (
+                                <UserAvatar />
+                            ) : (
+                                <BotAvatar />
+                            )}
+                            <p className="text-sm">{message.content}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
