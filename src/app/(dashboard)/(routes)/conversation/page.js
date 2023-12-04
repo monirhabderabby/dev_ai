@@ -1,20 +1,25 @@
 "use client";
-import Heading from "@/components/heading";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 
-import { BotAvatar } from "@/components/bot-avatar";
-import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
-import { UserAvatar } from "@/components/user-avatar";
-import { cn } from "@/lib/utils";
+// configuration
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+// packages
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { MessageSquare } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+
+// components
+import { BotAvatar } from "@/components/bot-avatar";
+import { Empty } from "@/components/empty";
+import Heading from "@/components/heading";
+import { Loader } from "@/components/loader";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { UserAvatar } from "@/components/user-avatar";
+import { cn } from "@/lib/utils";
 import { formSchema } from "./constants";
 
 const Conversation = () => {
