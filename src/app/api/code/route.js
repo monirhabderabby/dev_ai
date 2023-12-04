@@ -8,6 +8,12 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+const instructionMessage = {
+    role: "system",
+    content:
+        "You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations.",
+};
+
 export async function POST(req) {
     try {
         const { userId } = auth();
@@ -31,12 +37,12 @@ export async function POST(req) {
 
         const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
-            messages,
+            messages: [instructionMessage, ...messages],
         });
 
         return NextResponse.json(response.data.choices[0].message);
     } catch (error) {
-        console.log("[CONVERSATION_ERROR]", error);
+        console.log("[CODE_ERROR]", error);
         return NextResponse.json("Internal Error", { status: 500 });
     }
 }

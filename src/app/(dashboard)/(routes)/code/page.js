@@ -7,8 +7,9 @@ import { useState } from "react";
 // packages
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { MessageSquare } from "lucide-react";
+import { Code } from "lucide-react";
 import { useForm } from "react-hook-form";
+import ReactMarkdown from "react-markdown";
 
 // components
 import { BotAvatar } from "@/components/bot-avatar";
@@ -22,7 +23,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { cn } from "@/lib/utils";
 import { formSchema } from "./constants";
 
-const Conversation = () => {
+const CodePage = () => {
     const [messages, setMessages] = useState([]);
     const router = useRouter();
     const form = useForm({
@@ -42,7 +43,7 @@ const Conversation = () => {
             };
 
             const newMessages = [...messages, userMessage];
-            const response = await axios.post("/api/conversation", {
+            const response = await axios.post("/api/code", {
                 messages: newMessages,
             });
 
@@ -59,11 +60,11 @@ const Conversation = () => {
     return (
         <div>
             <Heading
-                title="Conversation"
-                description="Our most advanced conversation model."
-                Icon={MessageSquare}
-                iconColor="text-violet-500"
-                bgColor="bg-violet-500/10"
+                title="Code Generation"
+                description="Generate code using descriptive text."
+                Icon={Code}
+                iconColor="text-green-700"
+                bgColor="bg-green-700/10"
             />
             <div className="px-4 lg:px-8 ">
                 <Form {...form}>
@@ -79,7 +80,7 @@ const Conversation = () => {
                                         <Input
                                             className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent "
                                             disabled={isLoading}
-                                            placeholder="How do I calculate the radius of a circle?"
+                                            placeholder="Single toggle button using react hooks."
                                             {...field}
                                         />
                                     </FormControl>
@@ -120,7 +121,24 @@ const Conversation = () => {
                             ) : (
                                 <BotAvatar />
                             )}
-                            <p className="text-sm">{message.content}</p>
+                            <ReactMarkdown
+                                components={{
+                                    pre: ({ node, ...props }) => (
+                                        <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
+                                            <pre {...props} />
+                                        </div>
+                                    ),
+                                    code: ({ node, ...props }) => (
+                                        <code
+                                            className="bg-black/10 rounded-lg p-1"
+                                            {...props}
+                                        />
+                                    ),
+                                }}
+                                className="text-sm overflow-hidden leading-7"
+                            >
+                                {message.content || ""}
+                            </ReactMarkdown>
                         </div>
                     ))}
                 </div>
@@ -129,4 +147,4 @@ const Conversation = () => {
     );
 };
 
-export default Conversation;
+export default CodePage;
