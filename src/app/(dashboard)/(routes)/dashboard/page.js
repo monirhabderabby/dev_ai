@@ -13,35 +13,35 @@ import { useRouter } from "next/navigation";
 
 const tools = [
     {
-        lebel: "Conversation",
+        label: "Conversation",
         Icon: MessageSquare,
         color: "text-violet-500",
         bgColor: "bg-violet-500/10",
         href: "/conversation",
     },
     {
-        lebel: "Music Generation",
+        label: "Music Generation",
         Icon: Music,
         color: "text-emerald-500",
         bgColor: "bg-emerald-500/10",
         href: "/music",
     },
     {
-        lebel: "Image Generation",
+        label: "Image Generation",
         Icon: Image,
         color: "text-pink-700",
         bgColor: "bg-pink-700/10",
         href: "/image",
     },
     {
-        lebel: "Video Generation",
+        label: "Video Generation",
         Icon: Video,
         color: "text-orange-700",
         bgColor: "bg-orange-700/10",
         href: "/video",
     },
     {
-        lebel: "Code Generation",
+        label: "Code Generation",
         Icon: Code,
         color: "text-green-700",
         bgColor: "bg-green-700/10",
@@ -62,7 +62,7 @@ const DashboardPage = () => {
                 </p>
             </div>
             <div className="px-4 md:px-20 lg:px-32 space-y-4">
-                {tools?.map(({ href, lebel, Icon, color, bgColor }) => (
+                {tools?.map(({ href, label, Icon, color, bgColor }) => (
                     <Card
                         onClick={() => router.push(href)}
                         key={href}
@@ -74,7 +74,7 @@ const DashboardPage = () => {
                             >
                                 <Icon className={cn("w-8 h-8", color)} />
                             </div>
-                            <div className="font-semibold">{lebel}</div>
+                            <div className="font-semibold">{label}</div>
                         </div>
 
                         <ArrowRight className="w-5 h-5" />

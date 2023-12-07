@@ -1,23 +1,33 @@
 "use client";
+
+// configuration
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+// packages
+import axios from "axios";
+import { VideoIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+
+// components
 import { Empty } from "@/components/empty";
 import Heading from "@/components/heading";
 import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { VideoIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { formSchema } from "./constants";
 
 const VideoPage = () => {
-    const router = useRouter();
+    // state
     const [video, setVideo] = useState();
 
+    // hooks
+    const proModal = useProModal();
+    const router = useRouter();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -36,7 +46,7 @@ const VideoPage = () => {
             form.reset();
         } catch (error) {
             if (error?.response?.status === 403) {
-                // proModal.onOpen();
+                proModal.onOpen();
             } else {
                 toast.error("Something went wrong.");
             }

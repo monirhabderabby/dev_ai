@@ -1,5 +1,6 @@
 "use client";
-//
+
+// configuration
 import { useEffect, useState } from "react";
 
 // packages
@@ -10,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./sidebar";
 
-export const MobileSidebar = () => {
+export const MobileSidebar = ({ apiLimitCount }) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export const MobileSidebar = () => {
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="p-0">
-                <Sidebar />
+                <Sidebar apiLimitCount={apiLimitCount} />
             </SheetContent>
         </Sheet>
     );
