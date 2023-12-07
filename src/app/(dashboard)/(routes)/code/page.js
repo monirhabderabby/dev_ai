@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Code } from "lucide-react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 
 // components
@@ -20,11 +21,16 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UserAvatar } from "@/components/user-avatar";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { cn } from "@/lib/utils";
 import { formSchema } from "./constants";
 
 const CodePage = () => {
+    // state
     const [messages, setMessages] = useState([]);
+
+    // hooks
+    const proModal = useProModal();
     const router = useRouter();
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -51,7 +57,11 @@ const CodePage = () => {
 
             form.reset();
         } catch (error) {
-            console.log(error);
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            } else {
+                toast.error("Something went wrong.");
+            }
         } finally {
             router.refresh();
         }

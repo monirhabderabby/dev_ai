@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Download, ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 // components
 import { Empty } from "@/components/empty";
@@ -26,10 +27,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { amountOptions, formSchema, resolutionOptions } from "./constants";
 
 const ImagePage = () => {
+    // state
     const [images, setImages] = useState([]);
+
+    // hooks
+    const proModal = useProModal();
     const router = useRouter();
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -53,7 +59,11 @@ const ImagePage = () => {
             setImages(urls);
             form.reset();
         } catch (error) {
-            console.log(error);
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            } else {
+                toast.error("Something went wrong.");
+            }
         } finally {
             router.refresh();
         }
