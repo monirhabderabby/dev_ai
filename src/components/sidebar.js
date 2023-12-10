@@ -70,7 +70,7 @@ const routes = [
     },
 ];
 
-const Sidebar = ({ apiLimitCount = 0 }) => {
+const Sidebar = ({ apiLimitCount = 0, isPro = false }) => {
     // hooks
     const pathname = usePathname();
 
@@ -115,7 +115,7 @@ const Sidebar = ({ apiLimitCount = 0 }) => {
                     ))}
                 </div>
             </div>
-            <FreeCounter apiLimitCount={apiLimitCount} />
+            <FreeCounter isPro={isPro} apiLimitCount={apiLimitCount} />
         </div>
     );
 };

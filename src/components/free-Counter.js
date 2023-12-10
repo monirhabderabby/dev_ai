@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Progress } from "./ui/progress";
 
-const FreeCounter = ({ apiLimitCount = 0 }) => {
+const FreeCounter = ({ apiLimitCount = 0, isPro = false }) => {
     // state
     const [mounted, setMounted] = useState(false);
 
@@ -27,6 +27,10 @@ const FreeCounter = ({ apiLimitCount = 0 }) => {
         return null;
     }
     // ------------------------------
+
+    if (isPro) {
+        return null;
+    }
 
     return (
         <div className="px-3">
