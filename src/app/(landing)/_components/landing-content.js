@@ -4,30 +4,60 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const testimonials = [
     {
-        name: "Joel",
-        avatar: "J",
-        title: "Software Engineer",
-        description: "This is the best application I've ever used!",
+        name: "Sarah",
+        avatar: "S",
+        title: "Marketing Specialist",
+        description:
+            "Absolutely fantastic! This tool has streamlined our marketing processes and made my job much easier.",
     },
     {
-        name: "Antonio",
+        name: "Ryan",
+        avatar: "R",
+        title: "Data Analyst",
+        description:
+            "As a data analyst, I rely on accurate and efficient tools. This application exceeded my expectations and has become an integral part of my workflow.",
+    },
+    {
+        name: "Emily",
+        avatar: "E",
+        title: "Freelance Writer",
+        description:
+            "I'm a freelance writer, and this app has been a game-changer for brainstorming and organizing my ideas. It's a must-have in my creative toolkit.",
+    },
+    {
+        name: "Alex",
         avatar: "A",
-        title: "Designer",
-        description: "I use this daily for generating new photos!",
+        title: "Project Manager",
+        description:
+            "Managing projects can be overwhelming, but this application has made it a breeze. It's intuitive, feature-rich, and has significantly increased our team's productivity.",
     },
     {
-        name: "Mark",
-        avatar: "M",
-        title: "CEO",
+        name: "Linda",
+        avatar: "L",
+        title: "Entrepreneur",
         description:
-            "This app has changed my life, cannot imagine working without it!",
+            "As an entrepreneur, time is of the essence. This app has saved me countless hours, allowing me to focus on growing my business. Highly recommended!",
     },
     {
-        name: "Mary",
-        avatar: "M",
-        title: "CFO",
+        name: "Daniel",
+        avatar: "D",
+        title: "UX/UI Designer",
         description:
-            "The best in class, definitely worth the premium subscription!",
+            "From wireframing to prototyping, this application has become an indispensable tool in my design process. The interface is clean, and the functionality is top-notch.",
+    },
+    {
+        name: "Grace",
+        avatar: "G",
+        title: "Educator",
+        description:
+            "I use this app in my classroom to create engaging content for my students. It has made teaching more interactive and enjoyable for both me and my students.",
+    },
+    {
+        name: "Tom",
+        avatar: "T",
+        title: "Sales Representative",
+        description:
+            "Closing deals has never been easier. This app has helped me stay organized, track leads, and ultimately boost my sales performance. A game-changer in the world of sales.",
     },
 ];
 
@@ -52,7 +82,7 @@ const LandingContent = () => {
                                     </p>
                                 </div>
                             </CardTitle>
-                            <CardContent className="pt-4 px-0">
+                            <CardContent className="pt-4 px-0 text-white/80">
                                 {item.description}
                             </CardContent>
                         </CardHeader>
